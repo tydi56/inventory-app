@@ -1,4 +1,5 @@
 # inventory-app
+This React Native app to track and allocate inventory items is a hobby project and a work in progress. It's fun to test new tech and packages, and this is the perfect arena.
 
 ### Setup Instructions
 
