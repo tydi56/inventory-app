@@ -14,8 +14,8 @@ export default class Header extends React.Component {
 
         return (
             <View style={styles.header}>
-            	<TouchableOpacity onPress={() => this.props.navigation.navigate('AddItem')}>
-                	<Ionicons 
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('AddItem')}>
+                    <Ionicons 
                         style={styles.headerButton} 
                         name="md-add-circle" 
                         size={25}  
@@ -25,7 +25,7 @@ export default class Header extends React.Component {
                 <Text style={styles.headerTitle}>inventory</Text>
 
                 <TouchableOpacity onPress={() => this.props.navigation.navigate('Filters')}>
-                	<Feather 
+                    <Feather 
                         style={styles.headerButton} 
                         name="filter" 
                         size={25} 
