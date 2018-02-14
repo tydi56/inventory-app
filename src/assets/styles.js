@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-	/*
-	 * Header Styles
-	 */
-	header: {
+    /*
+     * Header Styles
+     */
+    header: {
         backgroundColor: '#6FA7C2',
         paddingTop: 15,
         paddingBottom: 5,
@@ -25,9 +25,9 @@ export default StyleSheet.create({
         flex: 1
     },
 
-	/*
-	 * Inventory Styles
-	 */
+    /*
+     * Inventory Styles
+     */
     infoItems: {
         fontSize: 15,
         fontWeight: 'bold',
@@ -62,8 +62,8 @@ export default StyleSheet.create({
     },
 
     /*
-	 * Filters Styles
-	 */
+     * Filters Styles
+     */
     buttonGroup: {
         flexDirection: 'row',
         justifyContent: 'center'
