@@ -22,7 +22,7 @@ import store from './redux/store.js';
 var invData = getMockInvData();
 var locations = [...new Set(invData.map((item, i) => item['location']))];
 var operations = [...new Set(invData.map((item, i) => item['operation']))];
-var dimensions = [...new Set(invData.map((item, i) => item['length']))];
+var dimensions = [...new Set(invData.map((item, i) => item['dimension']))];
 
 // Initialize available inventory data filters
 store.dispatch(setAvailableFilters(
@@ -33,8 +33,8 @@ store.dispatch(setAvailableFilters(
         operations: operations.map((op, i) => {
                         return {name: op, id: i}
                     }),
-        dimensions: dimensions.map((len, i) => {
-                    return {name: len, id: i}
+        dimensions: dimensions.map((dim, i) => {
+                    return {name: dim, id: i}
                   })
     }
 ));
