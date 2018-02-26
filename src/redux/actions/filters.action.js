@@ -17,9 +17,10 @@
 /**
  * Action to set location filters
  *
- * @param { string } locations 
+ * @param { array } locations 
  */
 export function setLocationsFilter(locations) {
+    console.log(locations)
     return {
         type: 'SET_LOCATIONS_FILTER',
         locations: locations
@@ -29,7 +30,7 @@ export function setLocationsFilter(locations) {
 /**
  * Action to set operations filters
  *
- * @param { string } operations 
+ * @param { array } operations 
  */
 export function setOperationsFilter(operations) {
     return {
@@ -41,7 +42,7 @@ export function setOperationsFilter(operations) {
 /**
  * Action to set lengths filters
  *
- * @param { string } lengths 
+ * @param { array } lengths 
  */
 export function setDimensionsFilter(dimensions) {
     return {

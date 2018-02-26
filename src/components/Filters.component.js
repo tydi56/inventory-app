@@ -5,6 +5,7 @@
  * to filter the displayed inventory data.
  *
  * TODO: Adjust components upon keyboard access/avoid keyboard
+ * TODO: Standardize selected item tags (like in Inventory component)
  */
 
 import React from 'react';
