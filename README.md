@@ -5,7 +5,7 @@ This React Native app to track and allocate inventory items is a hobby project a
 
 - Navigate to the "inventory-app" directory
 
-	```cd path/to/coffee-dispenser```
+	```cd path/to/inventory-app```
 
 - Install the required packages
 
