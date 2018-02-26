@@ -1,9 +1,9 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 
-export default StyleSheet.create({
-    /*
-     * Header Styles
-     */
+/*
+ * Header Styles
+ */
+export const headerStyles = StyleSheet.create({
     header: {
         backgroundColor: '#6FA7C2',
         paddingTop: 15,
@@ -24,46 +24,19 @@ export default StyleSheet.create({
         textAlign: 'center',
         flex: 1
     },
+});
 
-    /*
-     * Inventory Styles
-     */
-    infoItems: {
-        fontSize: 15,
-        fontWeight: 'bold',
-        marginLeft: 10
-    },
+/*
+ * Inventory Styles
+ */
+export const invStyles = StyleSheet.create({
+    
+});
 
-    badge: {
-        width: 'auto',
-        backgroundColor: '#6FA7C2'
-    },
-
-    appliedFilters: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 15
-    },
-
-    filter: {
-        backgroundColor: 'rgba(0,0,0,.54)', 
-        color:'#fff', 
-        paddingTop: 5, 
-        paddingBottom: 5, 
-        paddingRight: 10, 
-        paddingLeft: 10, 
-        borderRadius:20,
-        marginLeft: 10,
-        marginBottom: 5
-    },
-
-    filterIcon: {
-        fontSize: 12,
-    },
-
-    /*
-     * Filters Styles
-     */
+/*
+ * Filters Styles
+ */
+export const filterStyles = StyleSheet.create({
     buttonGroup: {
         flexDirection: 'row',
         justifyContent: 'center'
@@ -81,7 +54,32 @@ export default StyleSheet.create({
     },
 
     form: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
+        flex: 1,
+        justifyContent: 'space-between',
+    },
 });
+
+export const tagStyles = StyleSheet.create({
+    tagContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 15
+    },
+
+    tag: {
+        backgroundColor: 'rgba(0,0,0,.54)', 
+        color:'#fff', 
+        paddingTop: 5, 
+        paddingBottom: 5, 
+        paddingRight: 10, 
+        paddingLeft: 10, 
+        borderRadius:20,
+        marginLeft: 10,
+        marginBottom: 5
+    },
+
+    tagIcon: {
+        fontSize: 12,
+    },
+});
+

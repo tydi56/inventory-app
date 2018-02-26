@@ -1,24 +1,51 @@
 /*
  * Filters actions
  */
- 
-export function setLocationFilter(location) {
+
+/**
+ * Action to set available filters
+ *
+ * @param { object } available 
+ */
+ export function setAvailableFilters(available) {
     return {
-        type: 'SET_LOCATION_FILTER',
-        location: location
+        type: 'SET_AVAILABLE_FILTERS',
+        available: available
+    }
+ }
+
+/**
+ * Action to set location filters
+ *
+ * @param { string } locations 
+ */
+export function setLocationsFilter(locations) {
+    return {
+        type: 'SET_LOCATIONS_FILTER',
+        locations: locations
     }
 }
 
-export function setOperationFilter(operation) {
+/**
+ * Action to set operations filters
+ *
+ * @param { string } operations 
+ */
+export function setOperationsFilter(operations) {
     return {
-        type: 'SET_OPERATION_FILTER',
-        operation: operation
+        type: 'SET_OPERATIONS_FILTER',
+        operations: operations
     }
 }
 
-export function setLengthFilter(length) {
+/**
+ * Action to set lengths filters
+ *
+ * @param { string } lengths 
+ */
+export function setDimensionsFilter(dimensions) {
     return {
-        type: 'SET_LENGTH_FILTER',
-        length: length
+        type: 'SET_DIMENSIONS_FILTER',
+        dimensions: dimensions
     }
 }

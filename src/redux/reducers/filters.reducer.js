@@ -2,28 +2,52 @@
  * Filters reducer
  */
 
+// NOTE: The 'dimensions' property name was chosen instead
+// of 'lengths' to avoid confusion between the Array property 'length'
 const initialState = {
-    locations: [{name:'location 1'}],
-    operations: [
-        {name: 'rig down'}, 
-        {id: 2, name: 'rig up'}, 
-        {id: 3, name:'rig down'}
-    ],
-    lengths: [
-        {name: '25'}, 
-        {id: 2, name: '20'}, 
-        {id: 3, name:'65'}
-    ]
+    available: {
+        locations: [],
+        operations: [],
+        dimensions: []
+    },
+    applied: {
+        locations: [],
+        operations: [],
+        dimensions: []
+    }
 };
 
 function filters(state = initialState, action) {
     switch (action.type) {
-        case 'SET_LOCATION_FILTER':
-            return { ...state, locations: action.locations};
-        case 'SET_OPERATION_FILTER':
-            return { ...state, operation: action.operation };
-        case 'SET_LENGTH_FILTER':
-            return { ...state, length: action.length };
+        case 'SET_AVAILABLE_FILTERS':
+            return { 
+                ...state, 
+                available: action.available
+            };
+        case 'SET_LOCATIONS_FILTER':
+            return { 
+                ...state, 
+                applied: {
+                    ...state.applied, 
+                    locations: action.locations 
+                } 
+            };
+        case 'SET_OPERATIONS_FILTER':
+            return { 
+                ...state,
+                 applied: {
+                    ...state.applied, 
+                    operations: action.operations 
+                } 
+            };
+        case 'SET_DIMENSIONS_FILTER':
+            return { 
+                ...state, 
+                applied: {
+                    ...state.applied, 
+                    dimensions: action.dimensions 
+                } 
+            };
         default:
             return state;
     }

@@ -4,18 +4,18 @@
  * Allows the user to select certain options
  * to filter the displayed inventory data.
  *
- * TODO: Adjust components upon keyboard access
- * TODO: Centralize inventory data/filters
+ * TODO: Adjust components upon keyboard access/avoid keyboard
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styles from '../assets/styles.js';
-import { Card, Button } from 'react-native-elements';
+import { Card } from 'react-native-elements';
+import { filterStyles } from '../assets/css/styles.js';
 import MultiSelect from 'react-native-multiple-select';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, ScrollView, KeyboardAvoidingView } from 'react-native';
-import { setLocationFilter,setOperationFilter, setLengthFilter } from '../redux/actions/filters.action.js';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { setLocationsFilter, setOperationsFilter, setDimensionsFilter } from '../redux/actions/filters.action.js';
 
 class Filters extends React.Component {
 
@@ -23,190 +23,86 @@ class Filters extends React.Component {
         title: 'filters'
     };
 
-    constructor(props) {
+    static propTypes = { 
+        dispatch: PropTypes.func.isRequired,
+        filters: PropTypes.object.isRequired
+    };
 
-        super(props);
-
-        this.state = {
-            filteredLocations: [],
-            filteredOperation: [],
-            filteredLength: [],
-            invData: [
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '11-13-17 205',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-
-                    },
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '4-11-17 2',
-                        length: 100,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '10-31-17 44',
-                        length: 50,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-        
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '2-8-17 7',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-
-                    },
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '10-31-17 31',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '7-26-17 160',
-                        length: 25,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    }
-                ]
-        };
+    /**
+     * Dispatch action to update locations filter
+     *
+     * @param { string } location 
+     */
+    onSelectedLocationsChange = location => {
+        this.props.dispatch(setLocationsFilter(location));
     }
 
-    applyFilters() {
-        this.props.dispatch(setLocationFilter(this.state.filteredLocations));
-        this.props.dispatch(setOperationFilter(this.state.filteredOperation));
-        this.props.dispatch(setLengthFilter(this.state.filteredLength));
+    /**
+     * Dispatch action to update operations filter
+     *
+     * @param { string } operation 
+     */
+    onSelectedOperationsChange = operation => {
+        this.props.dispatch(setOperationsFilter(operation));
     }
 
-    filterCriteria(filter) {
-
-        var set = [...new Set(this.state.invData.map((item, i) => item[filter]))];
-
-        return set.map((item, i) => {
-            return {name: item, id: i}
-        });
-    }
-
-    onSelectedLocationChange = filteredLocations => {
-        this.setState({ filteredLocations });
-    }
-
-    onSelectedOperationChange = filteredOperations => {
-        this.setState({ filteredOperations });
-    }
-
-    onSelectedLengthChange = filteredLengths => {
-        this.setState({ filteredLengths });
+    /**
+     * Dispatch action to update lengths filter
+     *
+     * @param { string } length 
+     */
+    onSelectedDimensionsChange = dimension => {
+        this.props.dispatch(setDimensionsFilter(dimension));
     }
 
     render() {
 
+        var { available, applied } = this.props.filters;
+
         return (
-            <View>
-
-                <View style={styles.buttonGroup}>
-                    <Button
-                        onPress={() => this.applyFilters()}
-                        text='apply'
-                        buttonStyle={styles.button}
-                        iconRight
-                        icon={
-                            <FontAwesome 
-                                style={styles.buttonIcon} 
-                                name="check" 
-                                size={25} 
-                            />
-                        }
-                    />
-                    <Button
-                        text='clear'
-                        buttonStyle={styles.button}
-                        iconRight
-                        icon={
-                            <FontAwesome 
-                                style={styles.buttonIcon} 
-                                name="remove" 
-                                size={25} 
-                            />
-                        }
-                    />
-                </View>
-
-                {/* Location Filter Selector*/}
+            <ScrollView>
+                {/* Location Filter Selector */}
                 <Card title='LOCATIONS'>
                     <MultiSelect 
-                        items={this.filterCriteria('location')}
-                        selectedItems={this.state.filteredLocations}
-                        onSelectedItemsChange={this.onSelectedLocationChange}
-                        uniqueKey="id"
+                        items={available.locations}
+                        selectedItems={applied.locations}
+                        onSelectedItemsChange={this.onSelectedLocationsChange}
+                        uniqueKey="name"
+                        tagRemoveIconColor="#6FA7C2"
+                        tagBorderColor="#6FA7C2"
+                        submitButtonColor="#6FA7C2"
+                        hideSubmitButton={true}
                     />
-                    <View>
-                        {this.multiSelect && this.multiSelect.getSelectedItemsExt(this.state.filteredLocations)}
-                    </View>
                 </Card>
             
-            
-                {/* Operations Filter Selector*/}
+                {/* Operations Filter Selector */}
                 <Card title='OPERATIONS'>
                     <MultiSelect 
-                        items={this.filterCriteria('operation')}
-                        selectedItems={this.state.filteredOperations}
+                        items={available.operations}
+                        selectedItems={applied.operations}
                         onSelectedItemsChange={this.onSelectedOperationsChange}
-                        uniqueKey="id" 
+                        uniqueKey="name"
+                        tagRemoveIconColor="#6FA7C2"
+                        tagBorderColor="#6FA7C2"
+                        submitButtonColor="#6FA7C2"
+                        hideSubmitButton={true}
                     />
                 </Card>
                 
-                {/* Length Filter Selector*/}
+                {/* Length Filter Selector */}
                 <Card title='LENGTH'>
                     <MultiSelect 
-                        items={this.filterCriteria('length')}
-                        selectedItems={this.state.filteredLengths}
-                        onSelectedItemsChange={this.onSelectedLengthChange}
-                        uniqueKey="id"
-                        fixedHeight={true}
+                        items={available.dimensions}
+                        selectedItems={applied.dimensions}
+                        onSelectedItemsChange={this.onSelectedDimensionsChange}
+                        uniqueKey="name"
+                        tagRemoveIconColor="#6FA7C2"
+                        tagBorderColor="#6FA7C2"
+                        submitButtonColor="#6FA7C2"
+                        hideSubmitButton={true}
                     />
                 </Card>
-            
-            </View>
+            </ScrollView>
         );
     }
 }

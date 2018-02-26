@@ -1,20 +1,22 @@
 /*
  * Inventory component
  *
- * Displays inventory data. Intial data is unfiltered
- * and displays all inventory items.
+ * Displays inventory data.
  *
- * TODO: Centralize inventory data
+ * TODO: Centralize inventory data (perhaps as prop)
+ * TODO: Seperate filters into applicable and non-applicable
+ * TODO: Verify remaining available filter types
  *
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import styles from '../assets/styles.js';
+import Tags from './common/Tags.component.js';
+import { invStyles } from '../assets/css/styles.js';
 import Header from './common/Header.component.js';
-import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { List, ListItem, Badge } from 'react-native-elements';
+import { List, ListItem } from 'react-native-elements';
+import { getMockInvData } from '../assets/js/utils.js';
 import { Text, View, FlatList, Platform, StatusBar} from 'react-native';
 
 class Inventory extends React.Component {
@@ -23,121 +25,125 @@ class Inventory extends React.Component {
         header: null
     };
 
+    static propTypes = {
+        dispatch: PropTypes.func.isRequired,
+        filters: PropTypes.object.isRequired,
+        navigation: PropTypes.object
+    };
+
     constructor(props) {
         super(props);
-
-        this.state = {
-            activeLocation: '',
-            activeLocationIndex: 0,
-            invData: [
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '11-13-17 205',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '4-11-17 2',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-                    {
-                        location: 'Location 1',
-                        operation: 'Rig Up',
-                        serialNo: '10-31-17 44',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
         
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '2-8-17 7',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
+        this.state = {
+            inventory: []
+        }
+    }
 
-                    },
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '10-31-17 31',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    },
-                    {
-                        location: 'Location 2',
-                        operation: 'Rig Down',
-                        serialNo: '7-26-17 160',
-                        length: 20,
-                        condition: {
-                            ok: true,
-                            scrap: false,
-                            reWeb: false,
-                            comments: ''
-                        }
-                    }
-                ]
-        };
+    // Initialize inventory on mount
+    componentDidMount() {
+        this.setFilteredInventory(this.props.filters.applied);
+    }
+
+    // Subsequently update inventory output based on new/removed filter props
+    componentWillReceiveProps(nextProps) {
+        this.setFilteredInventory(nextProps.filters.applied);
+    }
+
+    /**
+     * Set filtered inventory to state
+     *
+     * @param { object } filters 
+     */
+    setFilteredInventory(filters) {
+        this.setState({
+            inventory: this.filteredInventory(getMockInvData(), filters)
+        })
+    }
+
+    /**
+     * Apply filters and return a new filtered inventory array
+     *
+     * @param { array } inventory
+     * @param { object } filters
+     * @return { array } filtered inventory
+     */
+    filteredInventory (inventory, filters)  {
+
+        var filtered = inventory.filter(item => {
+            
+            // Return if no filters
+            if (filters.locations.length == 0 &&
+                filters.operations.length == 0 &&
+                filters.dimensions.length == 0) {
+                return inventory;
+            }
+
+            const items = Object.values(item);
+
+            // Validates filter item
+            var meetsCriteria = (criteria) => {
+                if (criteria.length == 0) {
+                    return;
+                }
+
+                return criteria.some(filter => {
+                    var valid = items.indexOf(filter) >= 0;
+
+                    return valid;
+                });
+            }
+
+            if (meetsCriteria(filters.locations) === false) {
+                return false;
+            }
+
+            if (meetsCriteria(filters.operations) === false) {
+                return false;
+            }
+
+            if (meetsCriteria(filters.dimensions) === false) {
+                return false;
+            }
+
+            return true;
+
+        });
+
+        return filtered;
 
     }
 
     render() {
 
+        var { navigation, filters } = this.props;
+        var { inventory, applicableFilters } = this.state
+        var filterTags = [
+                        ...filters.applied.locations,
+                        ...filters.applied.operations,
+                        ...filters.applied.dimensions
+                    ];
+        
         return (
-            <View style={{paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight}}>
+            <View style={{ paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
 
-                <Header navigation={this.props.navigation}/>
+                <Header navigation={ navigation } />
 
-                <View style={styles.appliedFilters}>
-                    {Object.keys(this.props.filters).map((filter,i) => {
-                        // if(this.props.filters[filter] != undefined) {
-                        //     return (
-                        //         <Text style={styles.filter} key={i}>
-                        //             <Feather style={styles.filterIcon} name="filter" size={25} />&nbsp;
-                        //             {this.props.filters[filter]}
-                        //         </Text>
-                        //     );
-                        // }
-                    })}
-                </View>
+                {/* List of filters */}
+                <Tags 
+                    tags={ filterTags } 
+                    icon="filter" 
+                />
 
+                {/* Rendered inventory */}
                 <List>
                     <FlatList
-                        data={this.state.invData}
-                        keyExtractor={item => item.serialNo}
+                        data={ inventory }
+                        keyExtractor={ item => item.serialNo }
                         renderItem={({ item }) => (
                             <ListItem
                                 roundAvatar
-                                title={item.serialNo + ' @ ' + item.location}
-                                subtitle={'length: ' + item.length + ' ft.'}
+                                title={ item.serialNo + ' @ ' + item.location }
+                                subtitle={ 'length: ' + item.dimension }
                             />
                         )}
                     />
@@ -151,7 +157,7 @@ class Inventory extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
-        filters: state.filters,
+        filters: state.filters
     }
 }
 
