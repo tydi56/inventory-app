@@ -41,13 +41,14 @@ export default class KeyboardScroller extends React.Component {
     /**
      * Shown keyboard listener
      *
+     * Scroll to focused element
+     *
      * @param { event } e 
      */
      keyboardDidShow = e => {
         const  { State: TextInputState } = TextInput;
         const focused = TextInputState.currentlyFocusedField();
 
-        // Scroll to focused element
         this.scroller.scrollResponderScrollNativeHandleToKeyboard(
             ReactNative.findNodeHandle(focused),
             150, // offset just a bit
@@ -63,10 +64,11 @@ export default class KeyboardScroller extends React.Component {
     /**
      * Hidden keyboard listener
      *
+     * Remove spacer
+     *
      * @param { event } e 
      */
     keyboardDidHide = e => {
-        // Remove spacer
         this.setState({
             spacerHeight: 0
         });

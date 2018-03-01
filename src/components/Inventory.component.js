@@ -70,7 +70,7 @@ class Inventory extends React.Component {
      */
     filteredInventory (inventory, filters)  {
 
-        var filtered = inventory.filter(item => {
+        return inventory.filter(item => {
             
             // Return if no filters
             if (filters.locations.length == 0 &&
@@ -107,8 +107,6 @@ class Inventory extends React.Component {
             return true;
 
         });
-
-        return filtered;
 
     }
 
