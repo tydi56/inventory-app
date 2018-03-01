@@ -20,7 +20,6 @@
  * @param { array } locations 
  */
 export function setLocationsFilter(locations) {
-    console.log(locations)
     return {
         type: 'SET_LOCATIONS_FILTER',
         locations: locations

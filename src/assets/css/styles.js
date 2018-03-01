@@ -30,7 +30,23 @@ export const headerStyles = StyleSheet.create({
  * Inventory Styles
  */
 export const invStyles = StyleSheet.create({
+    itemSubtitle: {
+        fontWeight: 'bold',
+        marginLeft: 12,
+        color: 'grey'
+    },
+
+    noItemsContainer: {
+        flex: 1,
+        justifyContent: 'center'
+    },
     
+    noItemsText: {
+        alignSelf: 'center', 
+        fontSize: 25, 
+        fontWeight: 'bold', 
+        color:'grey'
+    }
 });
 
 /*

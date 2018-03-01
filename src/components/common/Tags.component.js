@@ -21,10 +21,6 @@ export default class Tags extends React.Component {
         icon: PropTypes.string
     };
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
 
         var { tags, icon } = this.props;

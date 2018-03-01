@@ -17,6 +17,7 @@ import { invStyles } from '../assets/css/styles.js';
 import Header from './common/Header.component.js';
 import { List, ListItem } from 'react-native-elements';
 import { getMockInvData } from '../assets/js/utils.js';
+import Entypo from 'react-native-vector-icons/Entypo';
 import { Text, View, FlatList, Platform, StatusBar} from 'react-native';
 
 class Inventory extends React.Component {
@@ -36,7 +37,7 @@ class Inventory extends React.Component {
         
         this.state = {
             inventory: []
-        }
+        };
     }
 
     // Initialize inventory on mount
@@ -57,7 +58,7 @@ class Inventory extends React.Component {
     setFilteredInventory(filters) {
         this.setState({
             inventory: this.filteredInventory(getMockInvData(), filters)
-        })
+        });
     }
 
     /**
@@ -87,9 +88,7 @@ class Inventory extends React.Component {
                 }
 
                 return criteria.some(filter => {
-                    var valid = items.indexOf(filter) >= 0;
-
-                    return valid;
+                    return items.indexOf(filter) >= 0;
                 });
             }
 
@@ -124,7 +123,7 @@ class Inventory extends React.Component {
                     ];
         
         return (
-            <View style={{ paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
+            <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
 
                 <Header navigation={ navigation } />
 
@@ -135,19 +134,40 @@ class Inventory extends React.Component {
                 />
 
                 {/* Rendered inventory */}
-                <List>
-                    <FlatList
-                        data={ inventory }
-                        keyExtractor={ item => item.serialNo }
-                        renderItem={({ item }) => (
-                            <ListItem
-                                roundAvatar
-                                title={ item.serialNo + ' @ ' + item.location }
-                                subtitle={ 'length: ' + item.dimension }
-                            />
-                        )}
-                    />
-                </List>
+                {inventory.length == 0 ? (
+
+                    // Alert if no inventory items were found
+                    <View style={ invStyles.noItemsContainer }>
+                        <Text style={ invStyles.noItemsText }>
+                            No inventory items found :(
+                        </Text>
+                    </View>
+
+                ) : (
+
+                    <List>
+                        <FlatList
+                            data={ inventory }
+                            keyExtractor={ item => item.serialNo }
+                            renderItem={({ item }) => (
+                                <ListItem
+                                    roundAvatar
+                                    title={ item.serialNo + ' @ ' + item.location }
+                                    subtitle={
+                                        <View>
+                                            <Text style={ invStyles.itemSubtitle }> 
+                                                { item.operation }
+                                                <Entypo name="dot-single"/>
+                                                { item.dimension }
+                                            </Text>
+                                        </View>
+                                    }
+                                />
+                            )}
+                        />
+                    </List>
+
+                  )}
                 
             </View>
         );

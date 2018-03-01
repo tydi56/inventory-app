@@ -6,7 +6,7 @@ export function getMockInvData() {
     return [
                 {
                     location: 'Location 1',
-                    operation: 'Rig Up',
+                    operation: 'rig up',
                     serialNo: '11-13-17 205',
                     dimension: '40 ft.',
                     ok: true,
@@ -16,7 +16,7 @@ export function getMockInvData() {
                 },
                 {
                     location: 'Location 1',
-                    operation: 'Rig Up',
+                    operation: 'rig up',
                     serialNo: '4-11-17 2',
                     dimension: '30 ft.',
                     ok: true,
@@ -26,7 +26,7 @@ export function getMockInvData() {
                 },
                 {
                     location: 'Location 1',
-                    operation: 'Rig Down',
+                    operation: 'rig down',
                     serialNo: '10-31-17 44',
                     dimension: '80 ft.',
                     ok: true,
@@ -37,7 +37,7 @@ export function getMockInvData() {
     
                 {
                     location: 'Location 2',
-                    operation: 'Rig Down',
+                    operation: 'rig down',
                     serialNo: '2-8-17 7',
                     dimension: '25 ft.',
                     ok: true,
@@ -47,7 +47,7 @@ export function getMockInvData() {
                 },
                 {
                     location: 'Location 2',
-                    operation: 'Rig Up',
+                    operation: 'rig up',
                     serialNo: '10-31-17 31',
                     dimension: '100 ft.',
                     ok: true,
@@ -57,7 +57,7 @@ export function getMockInvData() {
                 },
                 {
                     location: 'Location 2',
-                    operation: 'Rig Down',
+                    operation: 'rig down',
                     serialNo: '7-26-17 160',
                     dimension: '80 ft.',
                     ok: true,

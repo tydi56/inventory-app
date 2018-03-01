@@ -11,11 +11,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import { filterStyles } from '../assets/css/styles.js';
 import MultiSelect from 'react-native-multiple-select';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import KeyboardScroller from './common/KeyboardScroller.component.js';
 import { setLocationsFilter, setOperationsFilter, setDimensionsFilter } from '../redux/actions/filters.action.js';
 
 class Filters extends React.Component {
@@ -28,7 +28,7 @@ class Filters extends React.Component {
         dispatch: PropTypes.func.isRequired,
         filters: PropTypes.object.isRequired
     };
-
+    
     /**
      * Dispatch action to update locations filter
      *
@@ -61,49 +61,47 @@ class Filters extends React.Component {
         var { available, applied } = this.props.filters;
 
         return (
-            <ScrollView>
-                {/* Location Filter Selector */}
+            <KeyboardScroller>
                 <Card title='LOCATIONS'>
-                    <MultiSelect 
-                        items={available.locations}
-                        selectedItems={applied.locations}
-                        onSelectedItemsChange={this.onSelectedLocationsChange}
-                        uniqueKey="name"
-                        tagRemoveIconColor="#6FA7C2"
-                        tagBorderColor="#6FA7C2"
-                        submitButtonColor="#6FA7C2"
-                        hideSubmitButton={true}
-                    />
+                        <MultiSelect 
+                            onFocus={e => console.log(e)}
+                            items={available.locations}
+                            selectedItems={applied.locations}
+                            onSelectedItemsChange={this.onSelectedLocationsChange}
+                            uniqueKey='name'
+                            tagRemoveIconColor='#6FA7C2'
+                            tagBorderColor='#6FA7C2'
+                            submitButtonColor='#6FA7C2'
+                            hideSubmitButton={true}
+                        />
                 </Card>
-            
-                {/* Operations Filter Selector */}
                 <Card title='OPERATIONS'>
                     <MultiSelect 
                         items={available.operations}
                         selectedItems={applied.operations}
                         onSelectedItemsChange={this.onSelectedOperationsChange}
-                        uniqueKey="name"
-                        tagRemoveIconColor="#6FA7C2"
-                        tagBorderColor="#6FA7C2"
-                        submitButtonColor="#6FA7C2"
+                        uniqueKey='name'
+                        tagRemoveIconColor='#6FA7C2'
+                        tagBorderColor='#6FA7C2'
+                        submitButtonColor='#6FA7C2'
                         hideSubmitButton={true}
                     />
                 </Card>
-                
-                {/* Length Filter Selector */}
+                    
                 <Card title='LENGTH'>
-                    <MultiSelect 
+                    <MultiSelect
+                        onContentSizeChange={this._onContentSizeChange}
                         items={available.dimensions}
                         selectedItems={applied.dimensions}
                         onSelectedItemsChange={this.onSelectedDimensionsChange}
-                        uniqueKey="name"
-                        tagRemoveIconColor="#6FA7C2"
-                        tagBorderColor="#6FA7C2"
-                        submitButtonColor="#6FA7C2"
+                        uniqueKey='name'
+                        tagRemoveIconColor='#6FA7C2'
+                        tagBorderColor='#6FA7C2'
+                        submitButtonColor='#6FA7C2'
                         hideSubmitButton={true}
                     />
                 </Card>
-            </ScrollView>
+            </KeyboardScroller>
         );
     }
 }
