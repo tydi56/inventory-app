@@ -4,19 +4,19 @@
  * Allows the user to select certain options
  * to filter the displayed inventory data.
  *
- * TODO: Adjust components upon keyboard access/avoid keyboard
- * TODO: Standardize selected item tags (like in Inventory component)
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text, View } from 'react-native';
-import { Card } from 'react-native-elements';
-import { filterStyles } from '../assets/css/styles.js';
-import MultiSelect from 'react-native-multiple-select';
+import { Text, View, CheckBox} from 'react-native';
+import Picker from './common/Picker.component.js';
 import KeyboardScroller from './common/KeyboardScroller.component.js';
-import { setLocationsFilter, setOperationsFilter, setDimensionsFilter } from '../redux/actions/filters.action.js';
+import { 
+        setLocationsFilter, 
+        setOperationsFilter, 
+        setDimensionsFilter 
+    } from '../redux/actions/filters.action.js';
 
 class Filters extends React.Component {
 
@@ -32,28 +32,28 @@ class Filters extends React.Component {
     /**
      * Dispatch action to update locations filter
      *
-     * @param { string } location 
+     * @param { array } locations 
      */
-    onSelectedLocationsChange = location => {
-        this.props.dispatch(setLocationsFilter(location));
+    onSelectedLocationsChange = locations => {
+        this.props.dispatch(setLocationsFilter(locations));
     }
 
     /**
      * Dispatch action to update operations filter
      *
-     * @param { string } operation 
+     * @param { array } operations
      */
-    onSelectedOperationsChange = operation => {
-        this.props.dispatch(setOperationsFilter(operation));
+    onSelectedOperationsChange = operations => {
+        this.props.dispatch(setOperationsFilter(operations));
     }
 
     /**
      * Dispatch action to update lengths filter
      *
-     * @param { string } length 
+     * @param { array } lengths
      */
-    onSelectedDimensionsChange = dimension => {
-        this.props.dispatch(setDimensionsFilter(dimension));
+    onSelectedDimensionsChange = dimensions => {
+        this.props.dispatch(setDimensionsFilter(dimensions));
     }
 
     render() {
@@ -62,45 +62,26 @@ class Filters extends React.Component {
 
         return (
             <KeyboardScroller>
-                <Card title='LOCATIONS'>
-                        <MultiSelect 
-                            onFocus={e => console.log(e)}
-                            items={available.locations}
-                            selectedItems={applied.locations}
-                            onSelectedItemsChange={this.onSelectedLocationsChange}
-                            uniqueKey='name'
-                            tagRemoveIconColor='#6FA7C2'
-                            tagBorderColor='#6FA7C2'
-                            submitButtonColor='#6FA7C2'
-                            hideSubmitButton={true}
-                        />
-                </Card>
-                <Card title='OPERATIONS'>
-                    <MultiSelect 
-                        items={available.operations}
-                        selectedItems={applied.operations}
-                        onSelectedItemsChange={this.onSelectedOperationsChange}
-                        uniqueKey='name'
-                        tagRemoveIconColor='#6FA7C2'
-                        tagBorderColor='#6FA7C2'
-                        submitButtonColor='#6FA7C2'
-                        hideSubmitButton={true}
+                    <Picker
+                        title='Locations'
+                        items={ available.locations }
+                        selected={ applied.locations }
+                        onChange={ this.onSelectedLocationsChange}
                     />
-                </Card>
+
+                    <Picker
+                        title='Operations'
+                        items={ available.operations }
+                        selected={ applied.operations }
+                        onChange={ this.onSelectedOperationsChange }
+                    />
                     
-                <Card title='LENGTH'>
-                    <MultiSelect
-                        onContentSizeChange={this._onContentSizeChange}
-                        items={available.dimensions}
-                        selectedItems={applied.dimensions}
-                        onSelectedItemsChange={this.onSelectedDimensionsChange}
-                        uniqueKey='name'
-                        tagRemoveIconColor='#6FA7C2'
-                        tagBorderColor='#6FA7C2'
-                        submitButtonColor='#6FA7C2'
-                        hideSubmitButton={true}
+                    <Picker
+                        title='Lengths'
+                        items={ available.dimensions }
+                        selected={ applied.dimensions }
+                        onChange={ this.onSelectedDimensionsChange }
                     />
-                </Card>
             </KeyboardScroller>
         );
     }

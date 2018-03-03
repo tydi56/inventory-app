@@ -78,8 +78,7 @@ export const filterStyles = StyleSheet.create({
 export const tagStyles = StyleSheet.create({
     tagContainer: {
         flexDirection: 'row',
-        flexWrap: 'wrap',
-        marginTop: 15
+        flexWrap: 'wrap'
     },
 
     tag: {

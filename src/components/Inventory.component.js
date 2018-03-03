@@ -13,12 +13,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Tags from './common/Tags.component.js';
-import { invStyles } from '../assets/css/styles.js';
 import Header from './common/Header.component.js';
+import { invStyles } from '../assets/css/styles.js';
 import { List, ListItem } from 'react-native-elements';
 import { getMockInvData } from '../assets/js/utils.js';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { Text, View, FlatList, Platform, StatusBar} from 'react-native';
+import { Text, View, FlatList, Platform, StatusBar } from 'react-native';
 
 class Inventory extends React.Component {
 
@@ -62,7 +62,7 @@ class Inventory extends React.Component {
     }
 
     /**
-     * Apply filters and return a new filtered inventory array
+     * Validate filters and return a new filtered inventory array
      *
      * @param { array } inventory
      * @param { object } filters
@@ -126,7 +126,8 @@ class Inventory extends React.Component {
                 <Header navigation={ navigation } />
 
                 {/* List of filters */}
-                <Tags 
+                <Tags
+                    containerStyles={{ marginTop: 15 }}
                     tags={ filterTags } 
                     icon="filter" 
                 />

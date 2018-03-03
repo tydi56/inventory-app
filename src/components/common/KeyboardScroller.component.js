@@ -4,7 +4,8 @@
  * The KeyboardScroller component utilizes a ScrollView 
  * and allows focused elements to maneuver around the 
  * keyboard to avoid overlap.
- *
+ * 
+ * TODO: Handle device rotation
  * TODO: Return components if comprised of non-focusable elements
  */
 
