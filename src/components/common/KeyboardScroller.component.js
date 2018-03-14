@@ -83,8 +83,8 @@ export default class KeyboardScroller extends React.Component {
 
     render() {
 
-        var { children } = this.props;
-        var { spacerHeight } = this.state;
+        const { children } = this.props;
+        const { spacerHeight } = this.state;
         
         return (
             <ScrollView ref={ c => this.scroller = c }>

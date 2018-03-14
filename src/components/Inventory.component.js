@@ -112,9 +112,9 @@ class Inventory extends React.Component {
 
     render() {
 
-        var { navigation, filters } = this.props;
-        var { filteredInventory } = this.state;
-        var filterTags = [
+        const { navigation, filters } = this.props;
+        const { filteredInventory } = this.state;
+        const filterTags = [
                         ...filters.applied.locations,
                         ...filters.applied.operations,
                         ...filters.applied.dimensions

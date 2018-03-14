@@ -7,7 +7,7 @@ const initialState = {
 
 function filters(state = initialState, action) {
     switch (action.type) {
-    	case 'SET_INVENTORY':
+        case 'SET_INVENTORY':
             return { 
                 ...state, 
                 items: action.items

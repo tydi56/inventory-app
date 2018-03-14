@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Text, View, CheckBox} from 'react-native';
 import Picker from './common/Picker.component.js';
-import { getMockInvData } from '../assets/js/utils.js';
 import KeyboardScroller from './common/KeyboardScroller.component.js';
 import { 
         setLocationsFilter, 
@@ -37,14 +36,16 @@ class Filters extends React.Component {
             availLocFilters: [],
             availOpFilters: [],
             availDimFilters: []
-        }
+        };
     }
 
     componentDidMount() {
-        var invData = getMockInvData();
-        var locations = [...new Set(invData.map((item, i) => item['location']))];
-        var operations = [...new Set(invData.map((item, i) => item['operation']))];
-        var dimensions = [...new Set(invData.map((item, i) => item['dimension']))];
+        // Mocking available filters
+        // TODO: initiliaze this elsewhere (and more efficiently)
+        var { inventory } = this.props;
+        var locations = [...new Set(inventory.map((item, i) => item['location']))];
+        var operations = [...new Set(inventory.map((item, i) => item['operation']))];
+        var dimensions = [...new Set(inventory.map((item, i) => item['dimension']))];
 
         this.setState({
                 availLocFilters: locations.map((loc, i) => {
@@ -66,7 +67,7 @@ class Filters extends React.Component {
      */
     onSelectedLocationsChange = locations => {
         this.props.dispatch(setLocationsFilter(locations));
-    }
+    };
 
     /**
      * Dispatch action to update operations filter
@@ -75,7 +76,7 @@ class Filters extends React.Component {
      */
     onSelectedOperationsChange = operations => {
         this.props.dispatch(setOperationsFilter(operations));
-    }
+    };
 
     /**
      * Dispatch action to update lengths filter
@@ -84,12 +85,12 @@ class Filters extends React.Component {
      */
     onSelectedDimensionsChange = dimensions => {
         this.props.dispatch(setDimensionsFilter(dimensions));
-    }
+    };
 
     render() {
 
-        var { available, applied } = this.props.filters;
-        var {
+        const { available, applied } = this.props.filters;
+        const {
             availLocFilters,
             availOpFilters,
             availDimFilters
@@ -102,7 +103,6 @@ class Filters extends React.Component {
                         items={ availLocFilters }
                         selected={ applied.locations }
                         onChange={ this.onSelectedLocationsChange}
-                        canAddItems={true}
                     />
 
                     <Picker
@@ -125,7 +125,8 @@ class Filters extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
-        filters: state.filters
+        filters: state.filters,
+        inventory: state.inventory.items
     }
 }
 

@@ -11,7 +11,7 @@ const initialState = {
         dimensions: []
     },
     applied: {
-        locations: ['Location 1'],
+        locations: [],
         operations: [],
         dimensions: []
     }

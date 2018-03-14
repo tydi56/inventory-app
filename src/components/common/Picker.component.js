@@ -39,7 +39,7 @@ export default class Picker extends React.Component {
 
     render() {
 
-        var { 
+        const { 
                 items,
                 selected,
                 onChange,

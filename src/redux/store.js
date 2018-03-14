@@ -1,8 +1,6 @@
 /*
  * Create the redux store
- */
-
- /*
+ *
  * Combine and export reducers
  */
 import thunk from 'redux-thunk';
@@ -13,14 +11,14 @@ import filters from './reducers/filters.reducer.js';
 import inventory from './reducers/inventory.reducer.js';
 
 const reducers =  combineReducers({
-	inventory,
+    inventory,
     filters
 }); 
  
 export default createStore(
-	reducers,
-	applyMiddleware(
-    	thunk,
-    	api
-  	)
+    reducers,
+    applyMiddleware(
+        thunk,
+        api
+    )
 );

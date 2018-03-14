@@ -2,6 +2,7 @@
  * Headers component
  *
  * Renders re-usable header for each view
+ * TODO: make more generic
  */
 
 import React from 'react';
@@ -21,6 +22,8 @@ export default class Header extends React.Component {
 
         return (
             <View style={ headerStyles.header }>
+
+                {/* Add item button */}
                 <TouchableOpacity 
                     onPress={ () => this.props.navigation.navigate('AddItem') }>
                     <Ionicons 
@@ -32,6 +35,7 @@ export default class Header extends React.Component {
 
                 <Text style={ headerStyles.headerTitle }>inventory</Text>
 
+                {/* Filter button */}
                 <TouchableOpacity
                      onPress={ () => this.props.navigation.navigate('Filters') }>
                     <Feather 

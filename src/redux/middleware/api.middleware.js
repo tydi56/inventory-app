@@ -26,8 +26,6 @@ export default store => next => action => {
 
             // Pretend it worked and mock it for now
             return Promise.resolve(getMockInvData());
-        })
+        });
 
 };
-
-export const CALL_API = 'Call Api';
