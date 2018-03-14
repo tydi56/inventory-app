@@ -2,7 +2,7 @@
 This React Native app to track and allocate inventory items is a hobby project and a work in progress. It's fun to test new tech and packages, and this is the perfect arena.
 
 ### Note
-This project has only been tested on Android so far
+This project has only been tested on Android 8.1.0 so far
 
 ### Setup Instructions
 
