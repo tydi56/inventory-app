@@ -18,4 +18,4 @@ This project has only been tested on Android 8.1.0 so far
 
 	```npm start```
 	
-- Install [Expo](https://expo.io/) client app and scan QR code. Make sure your phone is on the same wireless network as your computer.
+- Install [Expo](https://expo.io/) client app on your phone and scan the QR code. Make sure your phone is on the same wireless network as your computer.
