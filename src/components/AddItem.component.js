@@ -1,13 +1,12 @@
 /*
  * Add Item Component
  *
- * Allows users to add additional/new
- * inventory items.
+ * Allows users to add additional inventory items.
  *
  */
 
 import React from 'react';
-import { Text, View } from 'react-native';
+import { TextInput, Text, View } from 'react-native';
 
 export default class AddItem extends React.Component {
 
@@ -20,10 +19,9 @@ export default class AddItem extends React.Component {
     }
 
     render() {
-    
         return (
             <View>
-                 <Text>Add Item</Text>
+                
             </View>
         );
     }

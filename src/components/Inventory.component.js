@@ -15,10 +15,10 @@ import { connect } from 'react-redux';
 import Tags from './common/Tags.component.js';
 import Header from './common/Header.component.js';
 import { invStyles } from '../assets/css/styles.js';
-import { List, ListItem } from 'react-native-elements';
-import { getMockInvData } from '../assets/js/utils.js';
 import Entypo from 'react-native-vector-icons/Entypo';
+import { List, ListItem } from 'react-native-elements';
 import { Text, View, FlatList, Platform, StatusBar } from 'react-native';
+import { getInventory, setInventory } from '../redux/actions/inventory.action.js';
 
 class Inventory extends React.Component {
 
@@ -34,31 +34,31 @@ class Inventory extends React.Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
-            inventory: []
+            filteredInventory: []
         };
     }
 
-    // Initialize inventory on mount
-    componentDidMount() {
-        this.setFilteredInventory(this.props.filters.applied);
+    // Fetch and set inventory before mount
+    componentWillMount() {
+        var { dispatch } = this.props;
+
+        dispatch(getInventory())
+            .then(items => dispatch(setInventory(items)))
+            .catch(error => console.log('Error setting inventory: ' + error));
     }
 
-    // Subsequently update inventory output based on new/removed filter props
-    componentWillReceiveProps(nextProps) {
-        this.setFilteredInventory(nextProps.filters.applied);
-    }
-
-    /**
-     * Set filtered inventory to state
-     *
-     * @param { object } filters 
-     */
-    setFilteredInventory(filters) {
-        this.setState({
-            inventory: this.filteredInventory(getMockInvData(), filters)
-        });
+    // Subsequently filter inventory upon receiving new filter props
+    componentWillReceiveProps(nextProps, prevProps) {
+        if (nextProps.filters != prevProps.filters) {
+            this.setState({
+                filteredInventory: this.getFilteredInventory(
+                                    nextProps.inventory, 
+                                    nextProps.filters.applied
+                                )
+            });
+        }
     }
 
     /**
@@ -68,7 +68,7 @@ class Inventory extends React.Component {
      * @param { object } filters
      * @return { array } filtered inventory
      */
-    filteredInventory (inventory, filters)  {
+    getFilteredInventory (inventory, filters)  {
 
         return inventory.filter(item => {
             
@@ -113,13 +113,13 @@ class Inventory extends React.Component {
     render() {
 
         var { navigation, filters } = this.props;
-        var { inventory, applicableFilters } = this.state
+        var { filteredInventory } = this.state;
         var filterTags = [
                         ...filters.applied.locations,
                         ...filters.applied.operations,
                         ...filters.applied.dimensions
                     ];
-        
+
         return (
             <View style={{ flex: 1, paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight }}>
 
@@ -133,7 +133,7 @@ class Inventory extends React.Component {
                 />
 
                 {/* Rendered inventory */}
-                {inventory.length == 0 ? (
+                {filteredInventory.length == 0 ? (
 
                     // Alert if no inventory items were found
                     <View style={ invStyles.noItemsContainer }>
@@ -146,7 +146,7 @@ class Inventory extends React.Component {
 
                     <List>
                         <FlatList
-                            data={ inventory }
+                            data={ filteredInventory }
                             keyExtractor={ item => item.serialNo }
                             renderItem={({ item }) => (
                                 <ListItem
@@ -176,6 +176,7 @@ class Inventory extends React.Component {
 
 function mapStateToProps(state, props) {
     return {
+        inventory: state.inventory.items,
         filters: state.filters
     }
 }
